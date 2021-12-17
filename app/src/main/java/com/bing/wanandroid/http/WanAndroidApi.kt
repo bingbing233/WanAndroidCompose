@@ -1,7 +1,9 @@
 package com.bing.wanandroid.http
 
-import com.bing.wanandroid.model.DataItem
+import com.bing.wanandroid.model.HomeResult
+import com.bing.wanandroid.model.WxResult
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 /**
  *  @author: liangbinghao
@@ -14,9 +16,11 @@ interface WanAndroidApi {
     }
 
     //首页文章列表
-    @GET("article/list/0/json")
-    suspend fun getHomeData():DataItem
+    @GET("article/list/{page}/json")
+    suspend fun getHomeArticle(@Path("page") page:Int?=0): HomeResult
 
-
+    //公众号
+    @GET("wxarticle/chapters/json ")
+    suspend fun getWxArticle():WxResult
 
 }
