@@ -52,7 +52,10 @@ class WanViewModel : ViewModel() {
     var showWebPage by mutableStateOf(false)
 
     //当前点击的item
-    var curItem: HomeArticle? = null
+    var curHomeItem: HomeArticle? = null
+
+    //公众号页面当前选中item
+    var wxCurItem by mutableStateOf(0)
 
     //是否正在刷新
     private val _isRefreshing = MutableStateFlow(false)

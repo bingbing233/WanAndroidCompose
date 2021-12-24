@@ -19,8 +19,12 @@ import com.google.accompanist.insets.ui.TopAppBar
 
 @Composable
 fun MainPage() {
+    val viewModel:WanViewModel = viewModel()
     Scaffold(topBar = { WanTopBar() }, bottomBar = { WanBottomBar() }) {
-        HomeList()
+        when(viewModel.selectedPage){
+            0-> HomeList()
+            2-> WxList()
+        }
     }
 }
 

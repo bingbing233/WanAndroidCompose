@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
                         visible = viewModel.showWebPage,
                         enter = slideInHorizontally { it },
                         exit = slideOutHorizontally { it }) {
-                        WebPage(data = viewModel.curItem)
+                        WebPage(data = viewModel.curHomeItem)
                     }
                 }
             }

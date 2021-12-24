@@ -25,7 +25,7 @@ fun HomeItem(homeArticle: HomeArticle) {
     Card(modifier = Modifier
         .clickable {
             viewModel.showWebPage = true
-            viewModel.curItem = homeArticle
+            viewModel.curHomeItem = homeArticle
         }
         .height(100.dp)
     ) {
