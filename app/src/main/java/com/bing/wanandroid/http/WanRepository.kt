@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 /**
  *  @author: liangbinghao
  *  @date:  2021/12/15 23:43
- *  @desc:
+ *  @desc: 网络请求仓库类
  */
 class WanRepository {
     private val retrofit: Retrofit = Retrofit.Builder()
@@ -30,10 +30,21 @@ class WanRepository {
         }
     }
 
-    suspend fun getWxArticle(callback: WanCallback<WxResult>){
+    suspend fun getWxOfficial(callback: WanCallback<WxResult>){
         kotlin.runCatching {
-            wanAndroidApi.getWxArticle()
+            wanAndroidApi.getWxOfficial()
         }.onSuccess {
+            callback.onSuccess(it)
+        }.onFailure {
+            callback.onFailed(it)
+        }
+    }
+
+    suspend fun getWxArticle(id:Int,page:Int?=null,callback: WanCallback<HomeResult>){
+        kotlin.runCatching {
+            wanAndroidApi.getWxArticle(id,page)
+        }.onSuccess {
+            Log.d("binghao", "getWxArticle: $it")
             callback.onSuccess(it)
         }.onFailure {
             callback.onFailed(it)

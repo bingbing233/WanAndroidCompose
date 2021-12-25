@@ -14,7 +14,7 @@ data class HomeResult(
 
 data class Data(
     val curPage: Int,
-    val datas: List<HomeArticle>,
+    val datas: List<Article>,
     val offset: Int,
     val over: Boolean,
     val pageCount: Int,
@@ -22,7 +22,7 @@ data class Data(
     val total: Int
 )
 
-data class HomeArticle(
+data class Article(
     val apkLink: String="",
     val audit: Int=0,
     val author: String="",

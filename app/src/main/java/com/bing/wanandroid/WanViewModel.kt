@@ -1,6 +1,5 @@
 package com.bing.wanandroid
 
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,10 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.bing.wanandroid.http.WanCallback
 import com.bing.wanandroid.http.WanRepository
 import com.bing.wanandroid.model.HomeResult
-import com.bing.wanandroid.model.HomeArticle
+import com.bing.wanandroid.model.Article
 import com.bing.wanandroid.model.WxOfficial
 import com.bing.wanandroid.model.WxResult
-import com.google.accompanist.swiperefresh.SwipeRefreshState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -40,22 +38,17 @@ class WanViewModel : ViewModel() {
 
     //数据量变化时重组
     var homeDataSize by mutableStateOf(0)
-    var wxDataSize by mutableStateOf(0)
 
     //主页
-    var homeData = ArrayList<HomeArticle>()
-
-    //公众号
-    var wxData = ArrayList<WxOfficial>()
+    var homeData = ArrayList<Article>()
 
     //是否展示webpage
     var showWebPage by mutableStateOf(false)
 
     //当前点击的item
-    var curHomeItem: HomeArticle? = null
+    var curItem: Article? = null
 
-    //公众号页面当前选中item
-    var wxCurItem by mutableStateOf(0)
+
 
     //是否正在刷新
     private val _isRefreshing = MutableStateFlow(false)
@@ -80,22 +73,6 @@ class WanViewModel : ViewModel() {
                         _isRefreshing.emit(false)
                     }
                 }
-            })
-        }
-    }
-
-    fun getWxArticle() {
-        viewModelScope.launch {
-            repository.getWxArticle(object : WanCallback<WxResult> {
-                override fun onSuccess(result: WxResult) {
-                    wxData.clear()
-                    wxData.addAll(result.data)
-                    wxDataSize = wxData.size
-                }
-
-                override fun onFailed(t: Throwable) {
-                }
-
             })
         }
     }

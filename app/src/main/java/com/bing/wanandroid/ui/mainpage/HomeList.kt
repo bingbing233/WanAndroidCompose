@@ -14,18 +14,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bing.wanandroid.WanViewModel
-import com.bing.wanandroid.model.HomeArticle
+import com.bing.wanandroid.model.Article
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @SuppressLint("SimpleDateFormat")
 @Composable
-fun HomeItem(homeArticle: HomeArticle) {
+fun HomeItem(article: Article) {
     val viewModel: WanViewModel = viewModel()
     Card(modifier = Modifier
         .clickable {
             viewModel.showWebPage = true
-            viewModel.curHomeItem = homeArticle
+            viewModel.curItem = article
         }
         .height(100.dp)
     ) {
@@ -34,10 +34,10 @@ fun HomeItem(homeArticle: HomeArticle) {
                 .fillMaxSize()
                 .padding(8.dp), verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text(text = homeArticle.title, style = MaterialTheme.typography.subtitle1)
+            Text(text = article.title, style = MaterialTheme.typography.subtitle1)
             Row(horizontalArrangement = Arrangement.SpaceBetween,modifier = Modifier.fillMaxWidth()) {
-                Text(text =homeArticle.chapterName, style = MaterialTheme.typography.body1, color = Color.Gray)
-                Text(text = homeArticle.niceDate,style = MaterialTheme.typography.body2,color = Color.Gray)
+                Text(text =article.chapterName, style = MaterialTheme.typography.body1, color = Color.Gray)
+                Text(text = article.niceDate,style = MaterialTheme.typography.body2,color = Color.Gray)
             }
         }
     }
