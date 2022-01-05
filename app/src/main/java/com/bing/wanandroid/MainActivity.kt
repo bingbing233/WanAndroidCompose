@@ -8,23 +8,34 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
+import androidx.compose.runtime.SideEffect
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bing.wanandroid.ui.mainpage.MainPage
 import com.bing.wanandroid.ui.WebPage
 import com.bing.wanandroid.ui.theme.WanAndroidTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: WanViewModel by viewModels()
+    private val homeViewModel: WanViewModel by viewModels()
+    private val wxViewModel:WxViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             WanAndroidTheme {
+                SideEffect {
+                    lifecycleScope.launch {
+                        wxViewModel.getWxOfficial()
+                    }
+                }
+
                 Box {
                     MainPage()
                     AnimatedVisibility(
-                        visible = viewModel.showWebPage,
+                        visible = homeViewModel.showWebPage,
                         enter = slideInHorizontally { it },
                         exit = slideOutHorizontally { it }) {
-                        WebPage(data = viewModel.curItem)
+                        WebPage(data = homeViewModel.curItem)
                     }
                 }
             }
@@ -32,8 +43,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onBackPressed() {
-        if (viewModel.showWebPage) {
-            viewModel.showWebPage = false
+        if (homeViewModel.showWebPage) {
+            homeViewModel.showWebPage = false
         } else {
             super.onBackPressed()
         }

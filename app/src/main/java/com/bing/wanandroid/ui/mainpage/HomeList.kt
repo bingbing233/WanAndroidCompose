@@ -77,28 +77,8 @@ fun HomeList() {
                 }
             }
 
-            is LoadState.Loading -> {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-
-            is LoadState.Error -> {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "Error", style = MaterialTheme.typography.h6)
-                }
-            }
+            else -> {}
         }
-
-
     }
 
 }

@@ -1,6 +1,5 @@
 package com.bing.wanandroid
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -22,7 +21,7 @@ class WxViewModel: ViewModel() {
 
 
     //公众号
-    var wxData = ArrayList<WxOfficial>()
+    var wxOfficial = ArrayList<WxOfficial>()
 
     //公众号文章
     val hongyang = ArrayList<Article>()
@@ -37,8 +36,8 @@ class WxViewModel: ViewModel() {
         viewModelScope.launch {
             WanRepository.getWxOfficial(object : WanCallback<WxResult> {
                 override fun onSuccess(result: WxResult) {
-                    wxData.clear()
-                    wxData.addAll(result.data)
+                    wxOfficial.clear()
+                    wxOfficial.addAll(result.data)
                 }
 
                 override fun onFailed(t: Throwable) {
