@@ -55,29 +55,12 @@ class WanViewModel : ViewModel() {
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
 
-    fun getHomeArticle() {
-        viewModelScope.launch {
-            _isRefreshing.emit(true)
-            WanRepository.getHomeArticle(object : WanCallback<HomeResult> {
-                override fun onSuccess(result: HomeResult) {
-                    homeData.clear()
-                    homeData.addAll(result.data.datas)
-                    homeDataSize = homeData.size
-                    viewModelScope.launch {
-                        _isRefreshing.emit(false)
-                    }
-                }
 
-                override fun onFailed(t: Throwable) {
-                    viewModelScope.launch {
-                        _isRefreshing.emit(false)
-                    }
-                }
-            })
-        }
+    fun getHomeArticle(): Flow<PagingData<Article>> {
+        return WanRepository.getHomeArticle().cachedIn(viewModelScope)
     }
 
-    fun getHomeArticle2(): Flow<PagingData<Article>> {
-        return WanRepository.getHomeArticle().cachedIn(viewModelScope)
+    fun getSquareArticle(): Flow<PagingData<Article>> {
+        return WanRepository.getSquareArticle().cachedIn(viewModelScope)
     }
 }

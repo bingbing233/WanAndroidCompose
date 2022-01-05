@@ -33,4 +33,7 @@ interface WanAndroidApi {
 
     @GET("wxarticle/list/{id}}/{page}/json")
     suspend fun getWxArticle(@Path("id") id: Int, @Path("page") page: Int? = 0): HomeResult
+
+    @GET("user_article/list/{page}/json")
+    suspend fun getSquareArticle(@Path("page")page: Int?=0):HomeResult
 }

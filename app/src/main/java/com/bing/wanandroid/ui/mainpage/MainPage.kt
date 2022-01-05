@@ -44,6 +44,7 @@ fun MainPage() {
     }, scaffoldState = scaffoldState) {
         when (viewModel.selectedPage) {
             0 -> HomeList()
+            1 -> SquareList()
             2 -> WxList()
         }
     }

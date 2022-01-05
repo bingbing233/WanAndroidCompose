@@ -22,8 +22,15 @@ object WanRepository {
     fun getHomeArticle(): Flow<PagingData<Article>> {
         return Pager(
             config = PagingConfig(15),
+            pagingSourceFactory = { ArticlePagingSource{ wanAndroidApi.getHomeArticle(it) } }
+        ).flow
+    }
+
+    fun getSquareArticle(): Flow<PagingData<Article>> {
+        return Pager(
+            config = PagingConfig(15),
             pagingSourceFactory = {
-                ArticlePagingSource(wanAndroidApi)
+                ArticlePagingSource{ wanAndroidApi.getSquareArticle(it)}
             }
         ).flow
     }
