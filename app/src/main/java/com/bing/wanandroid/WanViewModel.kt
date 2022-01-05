@@ -5,15 +5,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.bing.wanandroid.http.WanCallback
 import com.bing.wanandroid.http.WanRepository
 import com.bing.wanandroid.model.HomeResult
 import com.bing.wanandroid.model.Article
 import com.bing.wanandroid.model.WxOfficial
 import com.bing.wanandroid.model.WxResult
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
@@ -22,7 +23,6 @@ import kotlinx.coroutines.launch
  *  @desc:
  */
 class WanViewModel : ViewModel() {
-    private val repository = WanRepository()
     private val TAG = "WanViewModel"
     val bottomTitles = arrayListOf("主页", "广场", "公众号", "体系", "项目")
     val bottomIcons = arrayListOf(
@@ -58,7 +58,7 @@ class WanViewModel : ViewModel() {
     fun getHomeArticle() {
         viewModelScope.launch {
             _isRefreshing.emit(true)
-            repository.getHomeArticle(object : WanCallback<HomeResult> {
+            WanRepository.getHomeArticle(object : WanCallback<HomeResult> {
                 override fun onSuccess(result: HomeResult) {
                     homeData.clear()
                     homeData.addAll(result.data.datas)
@@ -75,5 +75,9 @@ class WanViewModel : ViewModel() {
                 }
             })
         }
+    }
+
+    fun getHomeArticle2(): Flow<PagingData<Article>> {
+        return WanRepository.getHomeArticle().cachedIn(viewModelScope)
     }
 }

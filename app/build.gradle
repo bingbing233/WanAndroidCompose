@@ -68,5 +68,6 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:4.9.3"
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation "com.google.accompanist:accompanist-swiperefresh:0.21.4-beta"
-    implementation 'com.tencent.tbs:tbssdk:44136'
+    implementation 'androidx.paging:paging-compose:1.0.0-alpha14'
+    implementation 'androidx.paging:paging-runtime-ktx:3.1.0'
 }

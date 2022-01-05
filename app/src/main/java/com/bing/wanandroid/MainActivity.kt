@@ -19,7 +19,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             WanAndroidTheme {
                 Box {
-                    viewModel.getHomeArticle()
                     MainPage()
                     AnimatedVisibility(
                         visible = viewModel.showWebPage,

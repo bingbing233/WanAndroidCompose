@@ -80,8 +80,8 @@ fun WanBottomBar() {
                 onClick = {
                     viewModel.selectedPage = it
                     when (it) {
-                        0 -> viewModel.getHomeArticle()
-                        2 -> wxViewModel.getWxArticle(id = 408)
+                       // 0 -> viewModel.getHomeArticle()
+                       // 2 -> wxViewModel.getWxArticle(id = 408)
                     }
                 },
                 icon = {
@@ -101,12 +101,11 @@ fun WanDrawer() {
     Box(
         Modifier
             .fillMaxSize()
-            .background(color = Color.White)
+            .background(color = MaterialTheme.colors.primary)
     ) {
         Column(Modifier.fillMaxSize()) {
 
         }
-
     }
 }
 

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
  */
 
 class WxViewModel: ViewModel() {
-    private val repository = WanRepository()
+
 
     //公众号
     var wxData = ArrayList<WxOfficial>()
@@ -35,7 +35,7 @@ class WxViewModel: ViewModel() {
 
     fun getWxOfficial() {
         viewModelScope.launch {
-            repository.getWxOfficial(object : WanCallback<WxResult> {
+            WanRepository.getWxOfficial(object : WanCallback<WxResult> {
                 override fun onSuccess(result: WxResult) {
                     wxData.clear()
                     wxData.addAll(result.data)
@@ -50,7 +50,7 @@ class WxViewModel: ViewModel() {
 
     fun getWxArticle(id:Int,page:Int?=null){
         viewModelScope.launch {
-            repository.getWxArticle(id,page,object :WanCallback<HomeResult>{
+            WanRepository.getWxArticle(id,page,object :WanCallback<HomeResult>{
                 override fun onSuccess(result: HomeResult) {
                     hongyang.clear()
                     hongyang.addAll(result.data.datas)
