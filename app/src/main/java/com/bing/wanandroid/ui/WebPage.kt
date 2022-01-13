@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.bing.wanandroid.WanViewModel
+import com.bing.wanandroid.ManiViewModel
 import com.bing.wanandroid.model.Article
 
 @Composable
@@ -59,7 +59,7 @@ fun WebPage(data: Article?) {
 
 @Composable
 fun WebTopBar(title: String, onRefreshClick: (() -> Unit)? = null) {
-    val viewModel: WanViewModel = viewModel()
+    val viewModel: ManiViewModel = viewModel()
     TopAppBar(
         title = {
             Text(

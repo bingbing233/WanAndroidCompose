@@ -5,21 +5,20 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.bing.wanandroid.WanViewModel
+import com.bing.wanandroid.ManiViewModel
 import com.bing.wanandroid.model.Article
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun HomeItem(article: Article) {
-    val viewModel: WanViewModel = viewModel()
+    val viewModel: ManiViewModel = viewModel()
     Card(modifier = Modifier
         .clickable {
             viewModel.showWebPage = true
@@ -55,7 +54,7 @@ fun HomeItem(article: Article) {
 
 @Composable
 fun HomeList() {
-    val viewModel: WanViewModel = viewModel()
+    val viewModel: ManiViewModel = viewModel()
     val isRefreshing = rememberSwipeRefreshState(isRefreshing = false)
     val article = viewModel.getHomeArticle().collectAsLazyPagingItems()
 

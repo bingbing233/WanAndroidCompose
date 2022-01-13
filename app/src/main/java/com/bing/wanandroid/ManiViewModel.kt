@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -22,7 +24,7 @@ import kotlinx.coroutines.launch
  *  @date:  2021/12/15 23:08
  *  @desc:
  */
-class WanViewModel : ViewModel() {
+class ManiViewModel : ViewModel() {
     private val TAG = "WanViewModel"
     val bottomTitles = arrayListOf("主页", "广场", "公众号", "体系", "项目")
     val bottomIcons = arrayListOf(
@@ -47,14 +49,6 @@ class WanViewModel : ViewModel() {
 
     //当前点击的item
     var curItem: Article? = null
-
-
-
-    //是否正在刷新
-    private val _isRefreshing = MutableStateFlow(false)
-    val isRefreshing: StateFlow<Boolean>
-        get() = _isRefreshing.asStateFlow()
-
 
     fun getHomeArticle(): Flow<PagingData<Article>> {
         return WanRepository.getHomeArticle().cachedIn(viewModelScope)

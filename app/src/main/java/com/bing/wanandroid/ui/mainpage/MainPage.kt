@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bing.wanandroid.R
-import com.bing.wanandroid.WanViewModel
+import com.bing.wanandroid.ManiViewModel
 import com.bing.wanandroid.WxViewModel
 import com.google.accompanist.insets.ui.Scaffold
 import com.google.accompanist.insets.ui.TopAppBar
@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainPage() {
     val scaffoldState = rememberScaffoldState()
-    val viewModel: WanViewModel = viewModel()
+    val viewModel: ManiViewModel = viewModel()
     val scope = rememberCoroutineScope()
     Scaffold(topBar = {
         WanTopBar(onNavClick = {
@@ -52,7 +52,7 @@ fun MainPage() {
 
 @Composable
 fun WanTopBar(onNavClick: () -> Unit) {
-    val viewModel: WanViewModel = viewModel()
+    val viewModel: ManiViewModel = viewModel()
     TopAppBar(
         title = { Text(text = viewModel.bottomTitles[viewModel.selectedPage]) },
         navigationIcon = {
@@ -72,7 +72,7 @@ fun WanTopBar(onNavClick: () -> Unit) {
 
 @Composable
 fun WanBottomBar() {
-    val viewModel: WanViewModel = viewModel()
+    val viewModel: ManiViewModel = viewModel()
     val wxViewModel: WxViewModel = viewModel()
     BottomNavigation {
         repeat(5) {
