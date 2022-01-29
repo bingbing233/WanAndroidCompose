@@ -10,7 +10,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.SideEffect
 import androidx.lifecycle.lifecycleScope
-import com.bing.wanandroid.ui.mainpage.MainPage
+import com.bing.wanandroid.ui.mainPage.MainPage
 import com.bing.wanandroid.ui.WebPage
 import com.bing.wanandroid.ui.theme.WanAndroidTheme
 import kotlinx.coroutines.launch

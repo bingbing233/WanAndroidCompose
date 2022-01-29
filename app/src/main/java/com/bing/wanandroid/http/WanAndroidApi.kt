@@ -26,14 +26,13 @@ interface WanAndroidApi {
     //首页文章列表
     @GET("article/list/{page}/json")
     suspend fun getHomeArticle(@Path("page") page: Int? = 0): HomeResult
-
     //获取公众号列表
     @GET("wxarticle/chapters/json ")
     suspend fun getWxOfficial(): WxResult
-
+    //获取某个公众号的历史文章
     @GET("wxarticle/list/{id}}/{page}/json")
     suspend fun getWxArticle(@Path("id") id: Int, @Path("page") page: Int? = 0): HomeResult
-
+    //获取广场文章
     @GET("user_article/list/{page}/json")
     suspend fun getSquareArticle(@Path("page")page: Int?=0):HomeResult
 }

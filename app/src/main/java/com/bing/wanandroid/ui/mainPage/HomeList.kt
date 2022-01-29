@@ -1,4 +1,4 @@
-package com.bing.wanandroid.ui.mainpage
+package com.bing.wanandroid.ui.mainPage
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,12 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bing.wanandroid.ManiViewModel
 import com.bing.wanandroid.model.Article
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun HomeItem(article: Article) {
@@ -39,7 +36,7 @@ fun HomeItem(article: Article) {
                 Text(
                     text = article.chapterName,
                     style = MaterialTheme.typography.body1,
-                    color = Color.Gray
+                    color = Color.Blue
                 )
                 Text(
                     text = article.niceDate,
@@ -55,30 +52,17 @@ fun HomeItem(article: Article) {
 @Composable
 fun HomeList() {
     val viewModel: ManiViewModel = viewModel()
-    val isRefreshing = rememberSwipeRefreshState(isRefreshing = false)
     val article = viewModel.getHomeArticle().collectAsLazyPagingItems()
-
-    SwipeRefresh(state = isRefreshing, onRefresh = {
-        article.retry()
-    }) {
-        when (article.loadState.refresh) {
-            is LoadState.NotLoading -> {
-                LazyColumn(
-                    Modifier
-                        .padding(horizontal = 8.dp, vertical = 60.dp)
-                        .fillMaxSize()
-                ) {
-                    repeat(article.itemCount) {
-                        item {
-                            article[it]?.let { it1 -> HomeItem(it1) }
-                        }
-                    }
-                }
+    LazyColumn(
+        Modifier
+            .padding(horizontal = 8.dp, vertical = 60.dp)
+            .fillMaxSize()
+    ) {
+        repeat(article.itemCount) {
+            item {
+                article[it]?.let { it1 -> HomeItem(it1) }
             }
-
-            else -> {}
         }
     }
-
 }
 

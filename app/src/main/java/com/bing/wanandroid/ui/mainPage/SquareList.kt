@@ -1,4 +1,4 @@
-package com.bing.wanandroid.ui.mainpage
+package com.bing.wanandroid.ui.mainPage
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
