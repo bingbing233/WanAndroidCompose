@@ -1,6 +1,7 @@
 package com.bing.wanandroid.http
 
 import com.bing.wanandroid.model.HomeResult
+import com.bing.wanandroid.model.TreeResult
 import com.bing.wanandroid.model.WxResult
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -35,4 +36,7 @@ interface WanAndroidApi {
     //获取广场文章
     @GET("user_article/list/{page}/json")
     suspend fun getSquareArticle(@Path("page")page: Int?=0):HomeResult
+    //获取体系数据
+    @GET("tree/json")
+    suspend fun getTree():TreeResult
 }

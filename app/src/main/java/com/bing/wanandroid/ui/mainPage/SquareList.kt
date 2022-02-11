@@ -35,6 +35,7 @@ fun SquareList() {
                     repeat(article.itemCount) {
                         item {
                             article[it]?.let { it1 -> HomeItem(it1){} }
+                            Spacer(modifier = Modifier.height(3.dp))
                         }
                     }
                 }

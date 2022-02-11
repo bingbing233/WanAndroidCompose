@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import com.bing.wanandroid.http.WanAndroidApi.Companion.create
 import com.bing.wanandroid.model.Article
 import com.bing.wanandroid.model.HomeResult
+import com.bing.wanandroid.model.TreeResult
 import com.bing.wanandroid.model.WxResult
 import kotlinx.coroutines.flow.Flow
 
@@ -59,5 +60,15 @@ object WanRepository {
                 }
             }
         ).flow
+    }
+
+    suspend fun getTreeResult(callback: WanCallback<TreeResult>){
+        kotlin.runCatching {
+            wanAndroidApi.getTree()
+        }.onSuccess {
+            callback.onSuccess(it)
+        }.onFailure {
+            callback.onFailed(it)
+        }
     }
 }

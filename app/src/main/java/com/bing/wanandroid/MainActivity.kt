@@ -1,6 +1,5 @@
 package com.bing.wanandroid
 
-import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,9 +10,9 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.SideEffect
 import androidx.lifecycle.lifecycleScope
-import com.bing.wanandroid.ui.mainPage.MainPage
 import com.bing.wanandroid.ui.WebPage
 import com.bing.wanandroid.ui.loginPage.LoginPage
+import com.bing.wanandroid.ui.mainPage.MainPage
 import com.bing.wanandroid.ui.theme.WanAndroidTheme
 import kotlinx.coroutines.launch
 
@@ -29,6 +28,7 @@ class MainActivity : ComponentActivity() {
                     lifecycleScope.launch {
                         //首次onCommit时请求公众号数据
                         wxViewModel.getWxOfficial()
+                        mainViewModel.getTreeResult()
                     }
                 }
 

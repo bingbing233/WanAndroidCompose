@@ -52,6 +52,7 @@ fun MainPage() {
             0 -> HomeList()
             1 -> SquareList()
             2 -> WxList()
+            3-> TreeList()
         }
     }
 

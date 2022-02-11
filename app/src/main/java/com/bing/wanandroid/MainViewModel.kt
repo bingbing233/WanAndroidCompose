@@ -1,5 +1,6 @@
 package com.bing.wanandroid
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,10 +9,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.bing.wanandroid.http.WanCallback
 import com.bing.wanandroid.http.WanRepository
 import com.bing.wanandroid.model.Article
+import com.bing.wanandroid.model.TreeData
+import com.bing.wanandroid.model.TreeResult
 import com.bing.wanandroid.ui.mainPage.MainPage
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 /**
  *  @author: liangbinghao
@@ -44,6 +49,22 @@ class MainViewModel : ViewModel() {
 
     fun getSquareArticle(): Flow<PagingData<Article>> {
         return WanRepository.getSquareArticle().cachedIn(viewModelScope)
+    }
+
+    var treeResult = ArrayList<TreeData>()
+    fun getTreeResult(){
+        viewModelScope.launch {
+            WanRepository.getTreeResult(object :WanCallback<TreeResult>{
+                override fun onSuccess(result: TreeResult) {
+                    treeResult.clear()
+                    treeResult.addAll(result.data)
+                }
+
+                override fun onFailed(t: Throwable) {
+                    Log.e(TAG, "onFailed: ",t )
+                }
+            })
+        }
     }
 
 }

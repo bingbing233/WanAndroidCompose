@@ -50,7 +50,6 @@ fun WxList() {
         HorizontalPager(
             count = wxViewModel.wxOfficial.size,
             state = pagerState,
-            modifier = Modifier.padding(horizontal = 6.dp)
         ) {
             Box(
                 Modifier
@@ -58,7 +57,7 @@ fun WxList() {
                     .background(Color.White), contentAlignment = Alignment.Center
             ) {
                 Text(text = "$it")
-                LazyColumn(Modifier.fillMaxSize()){
+                LazyColumn(Modifier.fillMaxSize().padding(vertical = 5.dp, horizontal = 8.dp)){
                     val articles = articleList[official[it].id]
                     repeat(articles?.itemCount?:0){ itemIndex->
                         item {
@@ -68,8 +67,8 @@ fun WxList() {
                                     mainViewModel.curItem = it1
                                 }
                             }
+                            Spacer(modifier = Modifier.height(3.dp))
                         }
-
                     }
                 }
             }
