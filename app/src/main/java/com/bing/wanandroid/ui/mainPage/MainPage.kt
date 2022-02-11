@@ -18,13 +18,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import com.bing.wanandroid.R
-import com.bing.wanandroid.ManiViewModel
-import com.bing.wanandroid.ui.loginPage.LoginPage
+import com.bing.wanandroid.MainViewModel
+import com.bing.wanandroid.PageState
 import com.google.accompanist.insets.ui.Scaffold
 import com.google.accompanist.insets.ui.TopAppBar
 import kotlinx.coroutines.launch
@@ -37,40 +34,33 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainPage() {
+
     val scaffoldState = rememberScaffoldState()
-    val viewModel: ManiViewModel = viewModel()
+    val viewModel: MainViewModel = viewModel()
     val scope = rememberCoroutineScope()
 
-    val navController = rememberNavController()
-
-    NavHost(navController = navController, startDestination = "home"){
-        composable("home"){
-            Scaffold(topBar = {
-                WanTopBar(onNavClick = {
-                    scope.launch {
-                        scaffoldState.drawerState.open()
-                    }
-                })
-            }, bottomBar = { WanBottomBar() }, drawerContent = {
-                WanDrawer(navController = navController)
-            }, scaffoldState = scaffoldState) {
-                when (viewModel.selectedPage) {
-                    0 -> HomeList()
-                    1 -> SquareList()
-                    2 -> WxList()
-                }
+    Scaffold(topBar = {
+        WanTopBar(onNavClick = {
+            scope.launch {
+                scaffoldState.drawerState.open()
             }
-        }
-        composable("login"){
-            LoginPage(navController = navController)
+        })
+    }, bottomBar = { WanBottomBar() }, drawerContent = {
+        WanDrawer()
+    }, scaffoldState = scaffoldState) {
+        when (viewModel.selectedPage) {
+            0 -> HomeList()
+            1 -> SquareList()
+            2 -> WxList()
         }
     }
+
 
 }
 
 @Composable
 fun WanTopBar(onNavClick: () -> Unit) {
-    val viewModel: ManiViewModel = viewModel()
+    val viewModel: MainViewModel = viewModel()
     TopAppBar(
         title = { Text(text = viewModel.bottomTitles[viewModel.selectedPage]) },
         navigationIcon = {
@@ -90,13 +80,13 @@ fun WanTopBar(onNavClick: () -> Unit) {
 
 @Composable
 fun WanBottomBar() {
-    val viewModel: ManiViewModel = viewModel()
+    val viewModel: MainViewModel = viewModel()
     BottomNavigation {
         repeat(5) {
             BottomNavigationItem(
                 selected = it == viewModel.selectedPage,
                 onClick = {
-
+                    viewModel.selectedPage = it
                 },
                 icon = {
                     Icon(
@@ -111,7 +101,8 @@ fun WanBottomBar() {
 }
 
 @Composable
-fun WanDrawer(navController: NavController) {
+fun WanDrawer() {
+    val viewModel:MainViewModel = viewModel()
     Box(
         Modifier
             .fillMaxSize()
@@ -121,7 +112,7 @@ fun WanDrawer(navController: NavController) {
                 Modifier
                     .fillMaxWidth()
                     .clickable {
-                        navController.navigate("login")
+                        viewModel.pageState.value = PageState.LoginPage
                     }
                     .background(color = MaterialTheme.colors.primary)
                     .padding(20.dp),

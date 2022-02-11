@@ -1,5 +1,6 @@
 package com.bing.wanandroid.http
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.bing.wanandroid.model.Article
@@ -16,8 +17,10 @@ class ArticlePagingSource(private val getHomeResult: suspend (Int)->HomeResult) 
             val articleItem = homeResult.data.datas
             val preKey = if(page > 1) page -1 else null
             val nextKey = if(articleItem.isNotEmpty()) page +1 else null
+            Log.e("LoadResult", "load:${articleItem.toString()} ", )
             LoadResult.Page(articleItem,preKey,nextKey)
         }catch (e:Exception){
+            Log.e("LoadResult", "load: ",e )
             LoadResult.Error(e)
         }
     }

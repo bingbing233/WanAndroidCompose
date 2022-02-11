@@ -13,20 +13,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.bing.wanandroid.MainViewModel
+import com.bing.wanandroid.PageState
 import com.bing.wanandroid.R
 
 @Composable
-fun LoginPage(navController: NavController) {
+fun LoginPage() {
+
+    val viewModel: MainViewModel = viewModel()
+
     var username by remember {
         mutableStateOf("")
     }
     var password by remember {
         mutableStateOf("")
     }
+
+
     Scaffold(topBar = {
         TopAppBar(title = { Text(text = "登录") }, navigationIcon = {
-            IconButton(onClick = { navController.popBackStack() }) {
+            IconButton(onClick = { viewModel.pageState.value = PageState.MainPage }) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "back"
@@ -41,7 +49,10 @@ fun LoginPage(navController: NavController) {
                 .fillMaxSize()
                 .padding(vertical = 100.dp, horizontal = 50.dp)
         ) {
-            Image(painter = painterResource(id = R.drawable.ic_launcher_foreground), contentDescription = "")
+            Image(
+                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                contentDescription = ""
+            )
             OutlinedTextField(
                 label = { Text(text = "账号") },
                 modifier = Modifier.fillMaxWidth(),
@@ -58,7 +69,7 @@ fun LoginPage(navController: NavController) {
                 onClick = { /*TODO*/ }, modifier = Modifier
                     .fillMaxWidth()
             ) {
-                Text(text = "登录",Modifier.padding(10.dp))
+                Text(text = "登录", Modifier.padding(10.dp))
             }
         }
     }

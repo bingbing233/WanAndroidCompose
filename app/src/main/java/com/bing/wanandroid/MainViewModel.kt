@@ -10,6 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.bing.wanandroid.http.WanRepository
 import com.bing.wanandroid.model.Article
+import com.bing.wanandroid.ui.mainPage.MainPage
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -17,7 +18,7 @@ import kotlinx.coroutines.flow.Flow
  *  @date:  2021/12/15 23:08
  *  @desc:
  */
-class ManiViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
     private val TAG = "WanViewModel"
     val bottomTitles = arrayListOf("主页", "广场", "公众号", "体系", "项目")
     val bottomIcons = arrayListOf(
@@ -31,11 +32,11 @@ class ManiViewModel : ViewModel() {
     //当前选中的page
     var selectedPage by mutableStateOf(0)
 
-    //是否展示webpage
-    var showWebPage by mutableStateOf(false)
-
     //当前点击的item
     var curItem: Article? = null
+
+    //当前页面
+    var pageState = mutableStateOf(PageState.MainPage)
 
     fun getHomeArticle(): Flow<PagingData<Article>> {
         return WanRepository.getHomeArticle().cachedIn(viewModelScope)
@@ -45,4 +46,10 @@ class ManiViewModel : ViewModel() {
         return WanRepository.getSquareArticle().cachedIn(viewModelScope)
     }
 
+}
+
+enum class PageState{
+    MainPage,
+    WebPage,
+    LoginPage
 }

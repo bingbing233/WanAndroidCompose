@@ -19,7 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.bing.wanandroid.ManiViewModel
+import com.bing.wanandroid.MainViewModel
+import com.bing.wanandroid.PageState
 import com.bing.wanandroid.model.Article
 
 @Composable
@@ -59,7 +60,7 @@ fun WebPage(data: Article?) {
 
 @Composable
 fun WebTopBar(title: String, onRefreshClick: (() -> Unit)? = null) {
-    val viewModel: ManiViewModel = viewModel()
+    val viewModel: MainViewModel = viewModel()
     TopAppBar(
         title = {
             Text(
@@ -70,7 +71,7 @@ fun WebTopBar(title: String, onRefreshClick: (() -> Unit)? = null) {
             )
         },
         navigationIcon = {
-            IconButton(onClick = { viewModel.showWebPage = false }) {
+            IconButton(onClick = { viewModel.pageState.value = PageState.MainPage }) {
                 Icon(Icons.Default.ArrowBack, null)
             }
         }, actions = {

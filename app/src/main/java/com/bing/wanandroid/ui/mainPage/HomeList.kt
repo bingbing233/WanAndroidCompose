@@ -10,16 +10,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.bing.wanandroid.ManiViewModel
+import com.bing.wanandroid.MainViewModel
+import com.bing.wanandroid.PageState
 import com.bing.wanandroid.model.Article
 
 @Composable
-fun HomeItem(article: Article) {
-    val viewModel: ManiViewModel = viewModel()
+fun HomeItem(article: Article, onClick: () -> Unit) {
     Card(modifier = Modifier
         .clickable {
-            viewModel.showWebPage = true
-            viewModel.curItem = article
+            onClick.invoke()
         }
         .height(100.dp)
     ) {
@@ -51,7 +50,7 @@ fun HomeItem(article: Article) {
 
 @Composable
 fun HomeList() {
-    val viewModel: ManiViewModel = viewModel()
+    val viewModel: MainViewModel = viewModel()
     val article = viewModel.getHomeArticle().collectAsLazyPagingItems()
     LazyColumn(
         Modifier
@@ -60,7 +59,12 @@ fun HomeList() {
     ) {
         repeat(article.itemCount) {
             item {
-                article[it]?.let { it1 -> HomeItem(it1) }
+                article[it]?.let { article ->
+                    HomeItem(article) {
+                        viewModel.curItem = article
+                        viewModel.pageState.value = PageState.WebPage
+                    }
+                }
             }
         }
     }

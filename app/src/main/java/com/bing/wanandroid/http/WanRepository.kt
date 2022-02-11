@@ -22,7 +22,7 @@ object WanRepository {
     fun getHomeArticle(): Flow<PagingData<Article>> {
         return Pager(
             config = PagingConfig(15),
-            pagingSourceFactory = { ArticlePagingSource{ wanAndroidApi.getHomeArticle(it) } }
+            pagingSourceFactory = { ArticlePagingSource { wanAndroidApi.getHomeArticle(it) } }
         ).flow
     }
 
@@ -30,21 +30,11 @@ object WanRepository {
         return Pager(
             config = PagingConfig(15),
             pagingSourceFactory = {
-                ArticlePagingSource{ wanAndroidApi.getSquareArticle(it)}
+                ArticlePagingSource { wanAndroidApi.getSquareArticle(it) }
             }
         ).flow
     }
 
-    suspend fun getHomeArticle(callback: WanCallback<HomeResult>) {
-        kotlin.runCatching {
-            wanAndroidApi.getHomeArticle()
-        }.onSuccess {
-            callback.onSuccess(it)
-            Log.d(TAG, "getHomeArticle: $it")
-        }.onFailure {
-            callback.onFailed(it)
-        }
-    }
 
     suspend fun getWxOfficial(callback: WanCallback<WxResult>) {
         kotlin.runCatching {
@@ -57,14 +47,17 @@ object WanRepository {
         }
     }
 
-    suspend fun getWxArticle(id: Int, page: Int? = null, callback: WanCallback<HomeResult>) {
-        kotlin.runCatching {
-            wanAndroidApi.getWxArticle(id, page)
-        }.onSuccess {
-            Log.d(TAG, "getWxArticle: $it")
-            callback.onSuccess(it)
-        }.onFailure {
-            callback.onFailed(it)
-        }
+    fun getWxArticle(id: Int): Flow<PagingData<Article>> {
+        return Pager(
+            config = PagingConfig(15),
+            pagingSourceFactory = {
+                ArticlePagingSource {
+                    wanAndroidApi.getWxArticle(
+                        id = id,
+                        page = it
+                    )
+                }
+            }
+        ).flow
     }
 }

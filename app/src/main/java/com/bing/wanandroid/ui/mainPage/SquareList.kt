@@ -12,13 +12,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.bing.wanandroid.ManiViewModel
+import com.bing.wanandroid.MainViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun SquareList() {
-    val viewModel: ManiViewModel = viewModel()
+    val viewModel: MainViewModel = viewModel()
     val isRefreshing = rememberSwipeRefreshState(isRefreshing = false)
     val article = viewModel.getSquareArticle().collectAsLazyPagingItems()
 
@@ -34,7 +34,7 @@ fun SquareList() {
                 ) {
                     repeat(article.itemCount) {
                         item {
-                            article[it]?.let { it1 -> HomeItem(it1) }
+                            article[it]?.let { it1 -> HomeItem(it1){} }
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 package com.bing.wanandroid
 
+import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,18 +13,21 @@ import androidx.compose.runtime.SideEffect
 import androidx.lifecycle.lifecycleScope
 import com.bing.wanandroid.ui.mainPage.MainPage
 import com.bing.wanandroid.ui.WebPage
+import com.bing.wanandroid.ui.loginPage.LoginPage
 import com.bing.wanandroid.ui.theme.WanAndroidTheme
 import kotlinx.coroutines.launch
 
+
 class MainActivity : ComponentActivity() {
-    private val homeViewModel: ManiViewModel by viewModels()
-    private val wxViewModel:WxViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
+    private val wxViewModel: WxViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             WanAndroidTheme {
                 SideEffect {
                     lifecycleScope.launch {
+                        //首次onCommit时请求公众号数据
                         wxViewModel.getWxOfficial()
                     }
                 }
@@ -31,10 +35,16 @@ class MainActivity : ComponentActivity() {
                 Box {
                     MainPage()
                     AnimatedVisibility(
-                        visible = homeViewModel.showWebPage,
+                        visible = mainViewModel.pageState.value == PageState.WebPage,
                         enter = slideInHorizontally { it },
                         exit = slideOutHorizontally { it }) {
-                        WebPage(data = homeViewModel.curItem)
+                        WebPage(data = mainViewModel.curItem)
+                    }
+                    AnimatedVisibility(
+                        visible = mainViewModel.pageState.value == PageState.LoginPage,
+                        enter = slideInHorizontally { it },
+                        exit = slideOutHorizontally { it }) {
+                        LoginPage()
                     }
                 }
             }
@@ -42,10 +52,10 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onBackPressed() {
-        if (homeViewModel.showWebPage) {
-            homeViewModel.showWebPage = false
-        } else {
+        if (mainViewModel.pageState.value == PageState.MainPage) {
             super.onBackPressed()
+        } else {
+         mainViewModel.pageState.value = PageState.MainPage
         }
     }
 }
