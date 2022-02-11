@@ -1,4 +1,4 @@
-package com.bing.wanandroid.ui.secondArticlePage
+package com.bing.wanandroid.ui.mainPage
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
